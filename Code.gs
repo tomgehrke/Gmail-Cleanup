@@ -71,7 +71,7 @@ function deleteOldMail() {
           messages=item.getMessages();
           for each (message in messages) {
             // If we sent the message...
-            if (message.getFrom()=myAddress){
+            if (message.getFrom()==myAddress){
               if (LoggingEnabled) {console.log("[SKIPPED] %s", item.getFirstMessageSubject());}
               // ...it's not OK to delete the thread.
               deleteOk=false;
