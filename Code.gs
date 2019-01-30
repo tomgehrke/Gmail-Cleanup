@@ -43,7 +43,6 @@ function deleteOldMail() {
   var item;
   var messages;
   var message;
-  var currentFrom;
   var deleteOk;
   var searchResultCount=0;
   var threadDeletedCount=0;
