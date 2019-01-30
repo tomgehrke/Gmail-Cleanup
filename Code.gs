@@ -14,7 +14,7 @@ var BatchSize=200;
 // Email address that would be used to reply to emails. Used
 // to keep any threads that I felt was important enough to
 // respond to.
-var myAddress="tomgehrke@gmail.com";
+var myAddress=Session.getActiveUser().getEmail();
 
 // Toggle logging. Not sure why one might *not* want to log, but...
 var LoggingEnabled=true;
@@ -43,6 +43,7 @@ function deleteOldMail() {
   var item;
   var messages;
   var message;
+  var currentFrom;
   var deleteOk;
   var searchResultCount=0;
   var threadDeletedCount=0;
@@ -71,10 +72,17 @@ function deleteOldMail() {
           messages=item.getMessages();
           for each (message in messages) {
             // If we sent the message...
-            if (message.getFrom()==myAddress){
+            
+            if (message.getFrom().toLowerCase().indexOf(myAddress.toLowerCase())>-1){
               if (LoggingEnabled) {console.log("[SKIPPED] %s", item.getFirstMessageSubject());}
               // ...it's not OK to delete the thread.
               deleteOk=false;
+
+              // Marking the thread as important will keep it from being returned by the search
+              // next time. You may have thought the thread was already labeled as important
+              // if you performed the same search via the Gmail UI because that is how it looks.
+              // Unfortunately, that is not always the case.
+              item.markImportant();
               
               //No sense checking anymore so let's get out of here.
               break;
