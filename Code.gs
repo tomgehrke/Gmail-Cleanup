@@ -96,7 +96,7 @@ function deleteOldMail() {
           // Count it.
           threadDeletedCount+=1;
           // Log it.
-          if (LoggingEnabled) {console.log("[DELETE] %s", item.getFirstMessageSubject());}
+          if (LoggingEnabled) {console.log("[DELETE][" + Utilities.formatDate(item.getLastMessageDate(), "GMT", "yyyy-MM-dd") + "] " + item.getFirstMessageSubject());}
         }
       }
     } while (threads!=null && threads.length>0);
